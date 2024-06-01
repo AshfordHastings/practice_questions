@@ -23,6 +23,10 @@ NGINX
 OTHER
 - What is a PID file? 
 - What does setting external=True on a Docker network do? 
+- What are WebSockets?
+- What is the process of a WebSocket connection handshake? 
+- What is FastCGI? 
+
 
 
 
