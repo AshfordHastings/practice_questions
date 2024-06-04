@@ -26,7 +26,14 @@ OTHER
 - What are WebSockets?
 - What is the process of a WebSocket connection handshake? 
 - What is FastCGI? 
+- What is Ray?
+- What is the difference between Ray and Spark?
+- How does Shopify use Ray within its Merlin project? 
+- What is DBT? 
+- What is the difference between Apache Fink and Spark? 
 
+## Priority Resources
+- https://linuxjourney.com/
 
 
 
