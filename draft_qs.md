@@ -30,10 +30,23 @@ OTHER
 - What is the difference between Ray and Spark?
 - How does Shopify use Ray within its Merlin project? 
 - What is DBT? 
-- What is the difference between Apache Fink and Spark? 
-
+- What is the difference between Apache Fink and Spark?
+- what is the nginx annotation mergeable ingress type minion? 
+- what is nginx vs nginx plus? 
+- What are imagePullSecrets? 
+- What is the difference between labels and annotations? 
+- What is a service account in Kubernetes? 
+- Questions about PathLib.å
+- Curl cheatsheet - curl questions.
+- Relearn pandas
+- What is CORS?
+- NFS / SMB
+- Learn Jinja templating
+- What is Lambda architecture? 
 ## Priority Resources
 - https://linuxjourney.com/
+[nginx-ingress-rewrite-target-problem](https://stackoverflow.com/questions/61185530/another-nginx-ingress-rewrite-target-problem)
+
 
 
 
