@@ -20,6 +20,7 @@ NGINX
 1. How do error.log and access.log work in NGINX? 
 
 
+
 OTHER
 - What is a PID file? 
 - What does setting external=True on a Docker network do? 
@@ -43,6 +44,7 @@ OTHER
 - NFS / SMB
 - Learn Jinja templating
 - What is Lambda architecture? 
+- How Do YAML anchors operate? How can these be referenced?
 ## Priority Resources
 - https://linuxjourney.com/
 [nginx-ingress-rewrite-target-problem](https://stackoverflow.com/questions/61185530/another-nginx-ingress-rewrite-target-problem)

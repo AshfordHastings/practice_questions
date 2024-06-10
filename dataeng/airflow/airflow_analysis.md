@@ -225,6 +225,14 @@ with DAG(
 - Sailpoint groups mapped to user groups in Azure AD. 
 - Azure AD Groups mapped to roles, giving users ability to view, execute, etc, only their DAGs.   
 
+**Initial Implementation**
+- The first implementation will be simple. We can set:
+    ```
+    AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session'
+    ```
+- This will require creating an admin user. A login endpoint can be requested from the web server level, and a session cookie can be set on all further requests, or, Basic Authentication can be used. 
+- To run 
+
 ### Azure Identities for Tasks
 - Let's say an application team has constructed a Task to be executed using KubernetesExecutor, a Task that needs to access their created instance of Azure Blob Storage. In this situation, the team would, publish an AzureIdentity and AzureIdenityBinding to their namespace in the cluster, and assign the Managed Identity represented by the Azure Identity object a role assignment, of whatever scope is needed, to the Managed Identity targeted to their Azure Blob Storage account.
 - Inside of the teams custom PodTemplateFile, or in a single PodTemplateOverride for a Task, if only one task is accessing Azure Blob Storage, the Pod can be assigned an `aadpodidentitybinding` label, allowing the `AzureIdentityBinding` to bind to the Pod based on its selector, and allowing for the Azure AD Pod Identity Kubernetes extension to handle all token management for the Pod running the Task.
@@ -265,12 +273,21 @@ with DAG(
 ### Recon Optimization Workflow
 
 #### Steps - Retraining
-- Airflow can ingest source files in a polling process. Otherwise, a separate listener functionality can call the API of Airflow. Or, You run a Task for a long time. Source stored in Blob Storage - time bound in metadata.
-- Airflow Task for syncing data to Databricks and generating samples. 
-- Frontend will use API to trigger DAG to retrain model. Can use different time intervals, dynamic DAGs, etc for model retraining.
+- **Ingestion of Source of Data**
+    - Option 1: External workload deployed that listens on Kafka queue for Source of Data, automatically storing the SOD records in Azure Blob Storage. The listener will then execute an API call to the Airflow web-server that triggers the SOW DAG. 
+    - Option 2: External workload deploye dthat listens on Kafka queue for Source of Data, automatically storing the SOD records in Azure Blob Storage. The Airflow DAG is configured to run daily with a sensor dependent on Azure Blob Storage - waiting for the SOD to appear in Azure Blob Storage before executing.
+    - Option 3: Airflow DAG created, and configured to run daily, with a sensor on the Kafka Topic, only running the DAG when it consumes a message on a Kafka topic matching a certain criteria. A dependent task will store the data contained in this message, or referenced in this message, to Azure Blob Storage.
+- **Sample Generation Task**
+    - Once the SOD is made avaliable, a Task will generate train / test samples from the Task and mount to DBFS. Retry logic, conditionality, etc can be applied here. This will conclude the DAG that is scheduled to run daily.
+- # Other Things will Happen
 
 #### Steps - Matching
-- There are cases within Matching where, for example, after running the clutsering algorithm, you would have have differents for matched records and unmatched records. In this case, as the data processed by the clustering / scoring Task would be on a batch of records, you would *not* use conditional branching, you would use parallel processing like so: `clustering_task >> [matched_task, unmatched_task] >> join_task >> final_task`. 
+- **Ingestion of Breaks Extract** - similar choice as Retraining with SOD.
+    - *Example* - 1 DAG: 1 Task for ESP Breaks Retrieval, one for Breaks publishing to Azure Blob Storage, one for database.\.
+- **Exception Coding** - DAG for categorizing / handling record discrepencies performed with a set of Tasks, all of which are able to be run in parellel, contain a complex set of dependencies, etc. End with Database update.
+- **Matching Algorithm** - A DAG is ran that has a dependency on the Exception Coding DAG. Operators are used for database, databricks, etc etc, to handle all of this. Run a Spark Job as an Operator! Update database at the end. 
+- **Man-In-the-Middle Matching** - DAGs for each user operation. Possible - determine best solution. 
+- There are cases within Matching where, for example, after running the clutsering algorithm, you would have have differents for matched records and unmatched records. In this case, as the data processed by the clustering / scoring Task would be on a batch of records, you would *not* use conditional branching, you would use parallel processing like so: `clustering_task >> [matched_task, unmatched_task] >> join_task >> final_task`.
 
 
 ## Concepts
