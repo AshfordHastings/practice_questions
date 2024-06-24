@@ -1,4 +1,6 @@
-## Helm Questions
+# Helm Questions
+
+## Some
 
 ### How does pipelining work when a function takes two arguments? 
 
@@ -153,3 +155,5 @@ These files are used to store partials and helpers. In fact, when we first creat
 ### How does namespacing work in Helm? How do you handle multinamespaced deployments? 
 
 ### How can Helm Hooks be used to allow for dependent jobs to be ran? 
+
+helm template --dry-run --debug wiki-dags .

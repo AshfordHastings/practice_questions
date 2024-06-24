@@ -137,3 +137,46 @@ openssl x509 -req -in flashcard.app.csr -signkey flashcard.app.key -out flashcar
 ```
 </details>
 
+### What is TTL on a DNS record?
+<details><summary>Answer</Summary>
+
+#### Answer:
+
+TTL (Time to Live) on a DNS record specifies the duration, in seconds, that a DNS resolver or caching server is allowed to cache the DNS record before it must query the authoritative DNS server for updated information. TTL helps manage the balance between reducing the load on DNS servers and ensuring that DNS information remains up-to-date.
+
+**Key Points:**
+
+1. **Definition:**
+   - TTL is a value in seconds that indicates how long a DNS record can be cached by DNS resolvers.
+   - After the TTL expires, the resolver must query the authoritative DNS server again to obtain the current record.
+
+2. **Usage:**
+   - TTL values can range from a few seconds to several days. Common values are 300 seconds (5 minutes), 3600 seconds (1 hour), and 86400 seconds (1 day).
+
+3. **Impact on DNS Resolution:**
+   - **Short TTL:** Ensures that changes to DNS records propagate quickly, but increases the load on DNS servers due to more frequent queries.
+   - **Long TTL:** Reduces the load on DNS servers and improves performance by reducing the frequency of queries, but delays the propagation of changes to DNS records.
+
+4. **Typical Use Cases:**
+   - **Low TTL:** Used when DNS records are expected to change frequently, such as during DNS migrations or for services with dynamic IP addresses.
+   - **High TTL:** Used for stable DNS records that do not change often, optimizing performance and reducing query load.
+
+5. **Example:**
+   - A DNS record with a TTL of 3600 seconds (1 hour) allows resolvers to cache the record for one hour before checking for updates.
+
+**Example DNS Record:**
+```plaintext
+example.com.  3600  IN  A  93.184.216.34
+```
+
+In this example, the A record for `example.com` has a TTL of 3600 seconds, meaning it can be cached for one hour.
+
+**Summary:**
+TTL is a critical parameter in DNS records that helps manage the balance between DNS query load and the timeliness of DNS information. Adjusting TTL values appropriately can optimize DNS performance and responsiveness based on the specific needs of the domain.
+
+Sources:
+- [Cloudflare: What is DNS TTL?](https://www.cloudflare.com/learning/dns/dns-records/dns-ttl/)
+- [AWS: How Amazon Route 53 works with TTL values](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/TTL.html)
+- [Microsoft: How to manage DNS TTL settings](https://docs.microsoft.com/en-us/azure/dns/dns-tutorial-ttl)
+
+</details>

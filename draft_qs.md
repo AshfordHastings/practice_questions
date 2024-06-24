@@ -50,7 +50,16 @@ OTHER
 [nginx-ingress-rewrite-target-problem](https://stackoverflow.com/questions/61185530/another-nginx-ingress-rewrite-target-problem)
 
 
+More
+- What is the difference between ARM64 and AMD64? What are architectures? 
+- How can you see the architecture used by a node in Kubernetes?
+- What is the differnence between architecture and an operating system? 
 
+Answer with the format of:
+### {Question}  
+<details><summary>Answer</Summary>
 
+{answer}
+</details>
 
-
+Answer succinctly. Answer with a shallowest depth of '####'.
