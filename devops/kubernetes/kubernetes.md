@@ -478,3 +478,5 @@ data:
 ```
 
 </details>
+
+### Practice q: run postgres on Kubernetses. Then create a Helm Chart.
